@@ -4,7 +4,7 @@ List<CategoryModel> _availableCategories = [
   CategoryModel(title: 'All'),
   CategoryModel(title: 'Smarphones'),
   CategoryModel(title: 'Headphones'),
-  CategoryModel(title: 'Laptops'),
+  CategoryModel(title: 'Laptos'),
   CategoryModel(title: 'Consoles'),
 ];
 List<CategoryModel> get availableCategories => _availableCategories;
