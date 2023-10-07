@@ -1,6 +1,7 @@
 import 'package:e_commerece/controllers/UI-cotrollers/bottom_navbar.dart';
 import 'package:e_commerece/view/screens/tabs_screen/fav_screen.dart';
 import 'package:e_commerece/view/screens/tabs_screen/home_screen.dart';
+import 'package:e_commerece/view/screens/tabs_screen/profile_screen.dart';
 import 'package:e_commerece/view/screens/tabs_screen/search_screen.dart';
 import 'package:e_commerece/view/widgets/bottom_nav.dart';
 import 'package:e_commerece/view/widgets/shopping_icon.dart';
@@ -17,9 +18,7 @@ class MainScreen extends StatelessWidget {
       HomeScreen(),
       SearchScreen(),
       FavScreen(),
-      Center(
-        child: Text('pro'),
-      ),
+      ProfileScreen()
     ];
     return Scaffold(
       appBar: AppBar(
