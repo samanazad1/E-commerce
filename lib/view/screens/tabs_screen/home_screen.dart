@@ -1,5 +1,7 @@
 import 'package:e_commerece/controllers/UI-cotrollers/tabbar_controller.dart';
+import 'package:e_commerece/controllers/data_controllers/item_data.dart';
 import 'package:e_commerece/model/data/categories_data.dart';
+import 'package:e_commerece/model/items_model.dart';
 import 'package:e_commerece/view/widgets/widgets_of_home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,29 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var mq = MediaQuery.of(context).size;
-
-    List<List<Widget>> items = const [
-      [MainItems(), MainItems(), MainItems(), MainItems()],
-      [
-        Center(
-          child: Text('s'),
-        )
-      ],
-      [
-        Center(
-          child: Text('sd'),
-        )
-      ],
-      [
-        Center(
-          child: Text('ffdf'),
-        )
-      ],
-      [
-        Center(
-          child: Text('vcvd'),
-        )
-      ],
+    final itemProvider =Provider.of<GetItems>(context, listen: false);
+    List<List<ItemModel>> items = [
+      itemProvider.allAvailableItems,
+      itemProvider.smartPhones,
+      itemProvider.laptops,
+      itemProvider.consoles
     ];
 
     return SingleChildScrollView(

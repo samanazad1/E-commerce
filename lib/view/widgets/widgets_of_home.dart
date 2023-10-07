@@ -1,4 +1,5 @@
 import 'package:e_commerece/controllers/UI-cotrollers/tabbar_controller.dart';
+import 'package:e_commerece/model/items_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:flutter/material.dart';
@@ -141,8 +142,8 @@ class CategorieItem extends StatelessWidget {
 }
 
 class MainItems extends StatelessWidget {
-  const MainItems({super.key});
-
+  const MainItems({super.key, required this.itemModel});
+  final ItemModel itemModel;
   @override
   Widget build(BuildContext context) {
     var mq = MediaQuery.of(context).size;
@@ -156,8 +157,8 @@ class MainItems extends StatelessWidget {
             color: Colors.grey[200],
           ),
           height: mq.height * 0.14,
-          child: Image.asset(
-            'images/macbook.png',
+          child: Image.network(
+            itemModel.path,
             fit: BoxFit.contain,
           ),
         ),
@@ -171,14 +172,14 @@ class MainItems extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('MacBook M2 Pro',
+                Text(itemModel.itemName,
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w500,
                         color: const Color.fromARGB(255, 101, 100, 100))),
                 const SizedBox(
                   height: 2,
                 ),
-                Text('1799.99\$',
+                Text('${itemModel.price}\$',
                     textAlign: TextAlign.start,
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w700,
@@ -194,7 +195,6 @@ class MainItems extends StatelessWidget {
                 SizedBox(
                   width: 6,
                 ),
-                Text('5')
               ],
             )
           ],
@@ -211,10 +211,11 @@ class CustomGrid extends StatelessWidget {
     required this.count,
   });
   final int count;
-  final List<Widget> items;
+  final List<ItemModel> items;
 
   @override
   Widget build(BuildContext context) {
+    var mq = MediaQuery.of(context).size;
     return SizedBox(
       height: 400,
       child: GridView.builder(
@@ -225,9 +226,60 @@ class CustomGrid extends StatelessWidget {
             mainAxisSpacing: 1.0,
             mainAxisExtent: 170),
         itemBuilder: (context, index) {
-          final item = items[index];
-          return Container(
-            child: item,
+          final itemModel = items[index];
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.grey[200],
+                ),
+                height: mq.height * 0.14,
+                child: Image.network(
+                  itemModel.path,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(itemModel.itemName,
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: const Color.fromARGB(255, 101, 100, 100))),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text('${itemModel.price}\$',
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w700,
+                              color: const Color.fromARGB(255, 0, 0, 0))),
+                    ],
+                  ),
+                  const Row(
+                    children: [
+                      Icon(
+                        Icons.star_outlined,
+                        color: Color.fromARGB(249, 211, 184, 27),
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                    ],
+                  )
+                ],
+              )
+            ],
           );
         },
       ),
