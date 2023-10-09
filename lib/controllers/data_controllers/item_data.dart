@@ -1,5 +1,5 @@
 import 'package:e_commerece/model/data/item_data.dart';
-import 'package:e_commerece/model/items_model.dart';
+import 'package:e_commerece/model/models/items_model.dart';
 import 'package:flutter/material.dart';
 
 class GetItems extends ChangeNotifier {

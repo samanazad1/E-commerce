@@ -28,9 +28,8 @@ class ProfileScreen extends StatelessWidget {
           ProfileActions(
             icon: IconlyLight.add_user,
             onPress: () {
-              print('hello');
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const SignupScreen(),
+                builder: (context) =>  AuthScreen(),
               ));
             },
             title: 'Register',

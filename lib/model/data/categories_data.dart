@@ -1,4 +1,4 @@
-import 'package:e_commerece/model/category_model.dart';
+import 'package:e_commerece/model/models/category_model.dart';
 
 List<CategoryModel> _availableCategories = [
   CategoryModel(title: 'All'),

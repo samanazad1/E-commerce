@@ -1,4 +1,4 @@
-import 'package:e_commerece/model/items_model.dart';
+import 'package:e_commerece/model/models/items_model.dart';
 
 List<ItemModel> _availableItems = [
   ItemModel(

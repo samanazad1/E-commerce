@@ -1,7 +1,7 @@
 import 'package:e_commerece/controllers/UI-cotrollers/tabbar_controller.dart';
 import 'package:e_commerece/controllers/data_controllers/item_data.dart';
 import 'package:e_commerece/model/data/categories_data.dart';
-import 'package:e_commerece/model/items_model.dart';
+import 'package:e_commerece/model/models/items_model.dart';
 import 'package:e_commerece/view/widgets/widgets_of_home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -2,7 +2,8 @@ import 'package:e_commerece/controllers/UI-cotrollers/auth_screen_controller.dar
 import 'package:e_commerece/controllers/UI-cotrollers/bottom_navbar.dart';
 import 'package:e_commerece/controllers/UI-cotrollers/tabbar_controller.dart';
 import 'package:e_commerece/controllers/data_controllers/item_data.dart';
-import 'package:e_commerece/view/screens/auth/auth_screen.dart'; 
+import 'package:e_commerece/view/screens/auth/auth_screen.dart';
+import 'package:e_commerece/view/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,7 @@ void main() {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(useMaterial3: true),
-        home: const SignupScreen(),
+        home:const MainScreen(),
       ),
     ),
   );
