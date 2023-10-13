@@ -1,10 +1,25 @@
+import 'package:e_commerece/controllers/data_controllers/authentication_controller.dart';
 import 'package:e_commerece/view/screens/auth/auth_screen.dart';
 import 'package:e_commerece/view/widgets/profile_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isLogin = false;
+  @override
+  void initState() {
+    final provider = Provider.of<AuthController>(context, listen: false);
+    super.initState();
+    _isLogin = provider.isUser;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +34,23 @@ class ProfileScreen extends StatelessWidget {
           const VerticalSpace(customHeight: 0.009),
           const UserInfo(),
           const VerticalSpace(customHeight: 0.04),
-          ProfileActions(
-            icon: IconlyLight.logout,
-            onPress: () {},
-            title: 'logout',
-          ),
           const VerticalSpace(customHeight: 0.025),
-          ProfileActions(
-            icon: IconlyLight.add_user,
-            onPress: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>  AuthScreen(),
-              ));
-            },
-            title: 'Register',
-          ),
+          Consumer<AuthController>(builder: (context, value, child) {
+            return ProfileActions(
+              icon: _isLogin ? IconlyLight.logout : IconlyLight.add_user,
+              onPress: _isLogin
+                  ? () {
+                      value.logout();
+
+                    }
+                  : () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AuthScreen(),
+                      ));
+                    },
+              title: _isLogin ? 'Logout' : 'Register',
+            );
+          }),
           const VerticalSpace(customHeight: 0.025),
           Divider(
             indent: 30,

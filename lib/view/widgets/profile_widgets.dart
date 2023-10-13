@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import '../config/text_styles.dart';
 
-class ProfileActions extends StatelessWidget {
+class ProfileActions extends StatefulWidget {
   final String title;
   final void Function() onPress;
   final IconData icon;
@@ -15,6 +17,11 @@ class ProfileActions extends StatelessWidget {
   });
 
   @override
+  State<ProfileActions> createState() => _ProfileActionsState();
+}
+
+class _ProfileActionsState extends State<ProfileActions> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.08,
@@ -24,7 +31,7 @@ class ProfileActions extends StatelessWidget {
           horizontal: MediaQuery.of(context).size.width * 0.02,
           vertical: MediaQuery.of(context).size.height * 0.01),
       child: InkWell(
-        onTap: onPress,
+        onTap: widget.onPress,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -32,12 +39,12 @@ class ProfileActions extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  icon,
+                  widget.icon,
                   color: Colors.green,
                   size: 30,
                 ),
-               const HorizontalSpace(customWidth: 0.04),
-                Text(title, style: kCustomStyle),
+                const HorizontalSpace(customWidth: 0.04),
+                Text(widget.title, style: kCustomStyle),
               ],
             ),
             const Icon(
@@ -79,10 +86,45 @@ class HorizontalSpace extends StatelessWidget {
   }
 }
 
-class UserInfo extends StatelessWidget {
+class UserInfo extends StatefulWidget {
   const UserInfo({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<UserInfo> createState() => _UserInfoState();
+}
+
+class _UserInfoState extends State<UserInfo> {
+  String? uid;
+  String? name;
+  String? email;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    final _auth = FirebaseAuth.instance.currentUser;
+
+    if (_auth != null) {
+      uid = _auth.uid;
+      email = _auth.email;
+
+      final firestore = await FirebaseFirestore.instance
+          .collection('userData')
+          .doc(_auth.uid)
+          .get();
+
+      if (firestore.exists) {
+        setState(() {
+          name = firestore.get('name');
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,16 +145,15 @@ class UserInfo extends StatelessWidget {
             maxRadius: 36,
             minRadius: 10,
             backgroundColor: Colors.green,
-            backgroundImage: NetworkImage(
-                'https://www.pngmart.com/files/21/Account-Avatar-Profile-PNG-Clipart.png'),
+            backgroundImage: AssetImage('images/guest.png'),
           ),
-        const  VerticalSpace(customHeight: 0.01),
-          Text(
-            'Guest',
-            style: kCustomStyle,
+          const VerticalSpace(customHeight: 0.01),
+            Text(
+            '$name',
+            style: const TextStyle(color: Colors.black),
           ),
-         const VerticalSpace(customHeight: 0.01),
         ],
+
       ),
     );
   }
