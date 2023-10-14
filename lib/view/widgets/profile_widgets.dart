@@ -1,10 +1,10 @@
 import 'package:e_commerece/controllers/data_controllers/authentication_controller.dart';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
-import '../config/text_styles.dart';
-
+import '../config/text_styles.dart';  
 class ProfileActions extends StatefulWidget {
   final String title;
   final void Function() onPress;
@@ -58,7 +58,6 @@ class _ProfileActionsState extends State<ProfileActions> {
     );
   }
 }
-
 class VerticalSpace extends StatelessWidget {
   final double customHeight;
   const VerticalSpace({
@@ -123,7 +122,10 @@ class _UserInfoState extends State<UserInfo> {
           Consumer<AuthController>(builder: (context, value, child) {
             return Text(
               value.name,
-              style: const TextStyle(color: Colors.black),
+              style: GoogleFonts.montserrat(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18),
             );
           }),
         ],

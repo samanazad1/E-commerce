@@ -1,4 +1,5 @@
 import 'package:e_commerece/controllers/data_controllers/authentication_controller.dart';
+import 'package:e_commerece/view/screens/admin_panel/verify_admin_screen.dart';
 import 'package:e_commerece/view/screens/auth/auth_screen.dart';
 import 'package:e_commerece/view/widgets/profile_widgets.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLogin = false;
-  String name ='' ;
+  String name = '';
   @override
   void initState() {
     final provider = Provider.of<AuthController>(context, listen: false);
@@ -34,9 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const VerticalSpace(customHeight: 0.009),
-          const UserInfo(
-          
-          ),
+          const UserInfo(),
           const VerticalSpace(customHeight: 0.04),
           const VerticalSpace(customHeight: 0.025),
           Consumer<AuthController>(builder: (context, value, child) {
@@ -75,6 +74,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
             icon: IconlyLight.call,
             onPress: () {},
             title: 'Contact Us',
+          ),
+          const VerticalSpace(customHeight: 0.015),
+          ProfileActions(
+            icon: Icons.admin_panel_settings_outlined,
+            onPress: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return VerifyAdmin();
+              }));
+            },
+            title: 'Admin Panel',
           ),
         ],
       ),
