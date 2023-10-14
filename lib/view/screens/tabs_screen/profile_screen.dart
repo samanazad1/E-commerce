@@ -14,11 +14,13 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLogin = false;
+  String name ='' ;
   @override
   void initState() {
     final provider = Provider.of<AuthController>(context, listen: false);
     super.initState();
     _isLogin = provider.isUser;
+    name = provider.name;
   }
 
   @override
@@ -32,7 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const VerticalSpace(customHeight: 0.009),
-          const UserInfo(),
+          const UserInfo(
+          
+          ),
           const VerticalSpace(customHeight: 0.04),
           const VerticalSpace(customHeight: 0.025),
           Consumer<AuthController>(builder: (context, value, child) {
@@ -41,7 +45,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPress: _isLogin
                   ? () {
                       value.logout();
-
                     }
                   : () {
                       Navigator.of(context).push(MaterialPageRoute(

@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:e_commerece/controllers/data_controllers/authentication_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 import '../config/text_styles.dart';
 
 class ProfileActions extends StatefulWidget {
@@ -96,36 +97,7 @@ class UserInfo extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInfo> {
-  String? uid;
-  String? name;
-  String? email;
-
   @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
-  Future<void> getData() async {
-    final _auth = FirebaseAuth.instance.currentUser;
-
-    if (_auth != null) {
-      uid = _auth.uid;
-      email = _auth.email;
-
-      final firestore = await FirebaseFirestore.instance
-          .collection('userData')
-          .doc(_auth.uid)
-          .get();
-
-      if (firestore.exists) {
-        setState(() {
-          name = firestore.get('name');
-        });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -148,12 +120,13 @@ class _UserInfoState extends State<UserInfo> {
             backgroundImage: AssetImage('images/guest.png'),
           ),
           const VerticalSpace(customHeight: 0.01),
-            Text(
-            '$name',
-            style: const TextStyle(color: Colors.black),
-          ),
+          Consumer<AuthController>(builder: (context, value, child) {
+            return Text(
+              value.name,
+              style: const TextStyle(color: Colors.black),
+            );
+          }),
         ],
-
       ),
     );
   }

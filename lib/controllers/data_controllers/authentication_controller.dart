@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerece/model/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +8,7 @@ class AuthController extends ChangeNotifier {
 
   void changeState() {
     isLoginScreen = !isLoginScreen;
+
     notifyListeners();
   }
 
@@ -19,11 +19,13 @@ class AuthController extends ChangeNotifier {
 
   String? _userName;
   String? get userName => _userName;
-  bool get isUser => user != null;
+
   AuthController() {
     // Initialize the user and username when the AuthController is created.
     _user = _auth.currentUser;
-    if (_user != null) {}
+    if (_user != null) {
+      fetchUserData();
+    }
   }
 
   Future<void> createAccount(
@@ -83,7 +85,39 @@ class AuthController extends ChangeNotifier {
     _auth.signOut();
   }
 
-  
-
-  getData() async {}
+  bool get isUser => user != null;
+  String name = '';
+  String? email;
+  String? userID;
+  // Define a function to fetch user data by UID
+  Future<void> fetchUserData() async {
+    try {
+      // Ensure the user is authenticated
+      if (_auth.currentUser != null) {
+        // Get the UID of the authenticated user
+        String uid = _auth.currentUser!.uid;
+        // Reference to the 'userData' collection
+        CollectionReference userDataCollection =
+            FirebaseFirestore.instance.collection('userData');
+        // Retrieve the user's document by UID
+        DocumentSnapshot userDoc = await userDataCollection.doc(uid).get();
+        // Check if the document exists
+        if (userDoc.exists) {
+          // Access the data from the document
+          name = userDoc.get('name');
+          email = userDoc.get('email');
+          userID = userDoc.get('userID');
+          notifyListeners();
+        } else {
+          return;
+        }
+      } else {
+        return;
+      }
+    } catch (e) {
+      return;
+      // Handle errors as needed
+    }
+  }
 }
+ 
